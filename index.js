@@ -3,6 +3,8 @@ const express = require('express');
 const connection = require('./database/database');
 const categoriesController = require('./categories/CategoriesController');
 const articlesController = require('./articles/ArticlesController');
+require('./categories/Category');
+require('./articles/Article');
 
 const app = express();
 
@@ -24,8 +26,8 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.use('/categories', categoriesController);
-app.use('/articles', articlesController);
+app.use('/', categoriesController);
+app.use('/', articlesController);
 
 app.listen('8080', () => {
   console.log('Started server!');
