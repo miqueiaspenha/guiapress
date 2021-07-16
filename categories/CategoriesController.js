@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 const express = require('express');
 const slugify = require('slugify');
 const Category = require('./Category');
@@ -29,7 +30,7 @@ router.post('/admin/categories/save', (req, res) => {
 
 router.post('/admin/categories/delete', (req, res) => {
   const { id } = req.body;
-  if (!id || Number.isNaN(id)) {
+  if (!id || isNaN(id)) {
     res.redirect('/admin/categories');
     return;
   }
@@ -38,6 +39,40 @@ router.post('/admin/categories/delete', (req, res) => {
   }).then(() => {
     res.redirect('/admin/categories');
   });
+});
+
+router.get('/admin/categories/edit/:id', (req, res) => {
+  const { id } = req.params;
+  if (isNaN(id)) {
+    res.redirect('/admin/categories');
+    return;
+  }
+  Category.findByPk(id)
+    .then((category) => {
+      if (!category) {
+        res.redirect('/admin/categories');
+      }
+      res.render('admin/categories/edit', { category });
+    }).catch(() => {
+      res.redirect('/admin/categories');
+    });
+});
+
+router.post('/admin/categories/update', (req, res) => {
+  const { id, title } = req.body;
+  if (!id || isNaN(id)) {
+    res.redirect('/admin/categories');
+    return;
+  }
+  if (!title) {
+    res.redirect(`/admin/categories/edit/${id}`);
+    return;
+  }
+  const slug = slugify(title, { lower: true, strict: true });
+  Category.update({ title, slug }, { where: { id } })
+    .then(() => {
+      res.redirect('/admin/categories');
+    });
 });
 
 module.exports = router;
