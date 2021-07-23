@@ -1,0 +1,18 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "dev-local",
+            "group": "docker",
+            "database": "guiapress",
+            "username": "root",
+            "password": "123456"
+        }
+    ]
+}

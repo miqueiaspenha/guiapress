@@ -34,9 +34,7 @@ router.post('/admin/categories/delete', (req, res) => {
     res.redirect('/admin/categories');
     return;
   }
-  Category.destroy({
-    where: { id },
-  }).then(() => {
+  Category.destroy({ where: { id } }).then(() => {
     res.redirect('/admin/categories');
   });
 });
