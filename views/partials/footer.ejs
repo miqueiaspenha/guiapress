@@ -1,10 +1,26 @@
-  <script src="http://localhost:8080/assets/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    function showDeleteConfimation(event, form) {
-      event.preventDefault();
-      const confirmed = confirm('Deseja realmente excluir o registro?');
-      if(confirmed) form.submit();
+<script src="http://localhost:8080/assets/node_modules/jquery/dist/jquery.min.js"></script>
+<script src="http://localhost:8080/assets/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src='http://localhost:8080/assets/node_modules/tinymce/tinymce.min.js'></script>
+<script>
+  function showDeleteConfimation(event, form) {
+    event.preventDefault();
+    const confirmed = confirm('Deseja realmente excluir o registro?');
+    if (confirmed) form.submit();
+  }
+
+  tinymce.init({
+    language: 'pt_BR',
+    selector: '#article',
+    activeEditor: true,
+    plugins: [
+      'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons'
+    ],
+    init_instance_callback: () => {
+      console.log($('#content').html());
+      tinymce.get('article').setContent($('#content').get(0))
     }
-  </script>
+  });
+</script>
 </body>
+
 </html>
